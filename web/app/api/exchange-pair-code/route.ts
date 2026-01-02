@@ -30,6 +30,7 @@ export async function POST(request: Request) {
         // 2. Format Validation
         const { code } = await request.json();
 
+        // Strict validation: Must be exactly 6 digits
         if (!code || typeof code !== 'string' || !/^\d{6}$/.test(code)) {
             console.warn(`Invalid code format received from IP: ${ip}`);
             // Return generic error to avoid probing
@@ -50,6 +51,7 @@ export async function POST(request: Request) {
         // 3. Atomic Consume & Check
         // We attempt to update the row ONLY if it is valid, unconsumed, and not expired.
         // If no row is returned, it means the code was invalid, consumed, or expired.
+        // This prevents race conditions.
         const { data, error } = await supabaseAdmin
             .from('extension_pair_codes')
             .update({ consumed: true })
