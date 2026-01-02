@@ -31,7 +31,26 @@ export async function updateSession(request: NextRequest) {
         }
     )
 
-    await supabase.auth.getUser()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    // Protected routes
+    if (request.nextUrl.pathname.startsWith('/meetings') || request.nextUrl.pathname.startsWith('/settings')) {
+        if (!user) {
+            const url = request.nextUrl.clone()
+            url.pathname = '/login'
+            url.searchParams.set('next', request.nextUrl.pathname)
+            return NextResponse.redirect(url)
+        }
+    }
+
+    // Auth routes
+    if (request.nextUrl.pathname.startsWith('/login')) {
+        if (user) {
+            const url = request.nextUrl.clone()
+            url.pathname = '/meetings'
+            return NextResponse.redirect(url)
+        }
+    }
 
     return response
 }

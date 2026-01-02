@@ -6,14 +6,14 @@ export default function Home() {
     <div className={styles.page}>
       <header className="container">
         <div className={styles.header}>
-          <div className={styles.brand}>MeetingApp</div>
+          <div className={styles.brand}>Briefly AI</div>
         </div>
       </header>
 
       <main className={`container ${styles.hero}`}>
-        <h1 className={styles.title}>MeetingApp</h1>
+        <h1 className={styles.title}>Briefly AI</h1>
         <p className={styles.subtitle}>
-          Record meetings with our Chrome extension and review them later in your private dashboard.
+          Smart Meeting Notes. Record meetings with our Chrome extension and review them later in your private dashboard.
         </p>
 
         <div className={styles.actions}>

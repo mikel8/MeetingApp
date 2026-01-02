@@ -5,3 +5,5 @@ node_modules
 .supabase
 .next
 .vercel
+asimplescreenrecorderv2/dist
+*.zip

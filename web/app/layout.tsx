@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Meeting Dashboard",
-  description: "Manage your meetings and artifacts",
+  title: "Briefly AI – Smart Meeting Notes",
+  description: "Smart Meeting Notes",
 };
 
 export default function RootLayout({
