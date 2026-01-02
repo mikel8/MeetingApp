@@ -1,0 +1,128 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    padding: 1.5rem 0;
+}
+
+.brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 0;
+    text-align: center;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to bottom, #fff, #a5a5a5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: hsl(var(--muted-foreground));
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.featuresContainer {
+    width: 100%;
+    max-width: 900px;
+    text-align: left;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.stepCard {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    transition: transform 0.2s;
+}
+
+.stepCard:hover {
+    transform: translateY(-2px);
+    border-color: hsl(var(--ring));
+}
+
+.stepNumber {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--primary));
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stepText {
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.privacyNote {
+    margin-top: 4rem;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.875rem;
+}
+
+.footer {
+    padding: 2rem 0;
+    border-top: 1px solid hsl(var(--border));
+    margin-top: auto;
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.link:hover {
+    color: hsl(var(--foreground));
+    text-decoration: underline;
+}
+
+.ctaBtn {
+    height: 3rem;
+    font-size: 1rem;
+    padding: 0 2rem;
+}

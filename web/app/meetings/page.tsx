@@ -20,7 +20,12 @@ export default async function MeetingsPage() {
     return (
         <div className="container">
             <header className="flex items-center justify-between mb-8">
-                <h1 className="text-2xl">Meetings</h1>
+                <div className="flex items-center">
+                    <h1 className="text-2xl">Meetings</h1>
+                    <Link href="/settings" className="text-sm text-muted" style={{ marginLeft: '1rem' }}>
+                        Settings
+                    </Link>
+                </div>
                 <CreateMeetingButton userId={user.id} />
             </header>
 
