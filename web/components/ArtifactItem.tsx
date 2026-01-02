@@ -19,12 +19,11 @@ export default function ArtifactItem({ artifact, initialSignedUrl }: ArtifactIte
     const supabase = createClient()
 
     useEffect(() => {
-        // If we don't have an initial URL, or if we want to ensure freshness on mount (though prompt said cache in state),
-        // we can fetch one. Current logic: if provided initially, use it. If not, fetch.
         if (!signedUrl) {
             refreshUrl()
         }
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [signedUrl])
 
     const refreshUrl = async () => {
         setIsLoading(true)
@@ -40,9 +39,10 @@ export default function ArtifactItem({ artifact, initialSignedUrl }: ArtifactIte
             } else {
                 throw new Error('No signed URL returned')
             }
-        } catch (err: any) {
+        } catch (err) {
             console.error('Error refreshing URL:', err)
-            setError(err.message || 'Failed to refresh URL')
+            const message = err instanceof Error ? err.message : 'Failed to refresh URL'
+            setError(message)
         } finally {
             setIsLoading(false)
         }

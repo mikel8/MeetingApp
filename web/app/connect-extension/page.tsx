@@ -52,9 +52,10 @@ export default function ConnectExtensionPage() {
             if (insertError) throw insertError;
 
             setCode(newCode);
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            setError(err.message || "Failed to generate code");
+            const message = err instanceof Error ? err.message : "Failed to generate code"
+            setError(message);
         } finally {
             setLoading(false);
         }

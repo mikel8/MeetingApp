@@ -72,7 +72,7 @@ export async function POST(request: Request) {
             user_id: data.user_id
         });
 
-    } catch (err: any) {
+    } catch (err) {
         console.error('Exchange error:', err);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }

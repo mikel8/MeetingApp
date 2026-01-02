@@ -90,9 +90,10 @@ export default function MeetingArtifacts({ meetingId, userId, initialArtifacts }
                 router.refresh()
             })
 
-        } catch (err: any) {
+        } catch (err) {
             console.error('Upload failed:', err)
-            setError(err.message || 'Upload failed')
+            const message = err instanceof Error ? err.message : 'Upload failed'
+            setError(message)
         } finally {
             setUploading(false)
         }

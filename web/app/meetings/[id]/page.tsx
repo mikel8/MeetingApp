@@ -24,6 +24,12 @@ export default async function MeetingDetailPage({ params }: { params: Promise<{ 
                     <ChevronLeft size={16} className="mr-1" /> Back to Meetings
                 </Link>
                 <div className="text-xl">Meeting not found</div>
+                <div className="p-4 bg-gray-900 rounded text-xs font-mono text-gray-500 mt-4">
+                    <p>Debug Info:</p>
+                    <p>Meeting ID Requested: {id}</p>
+                    <p>Current User ID: {user.id}</p>
+                    <p>Error: Meeting returned null from DB. Likely RLS mismatch or ID invalid.</p>
+                </div>
             </div>
         )
     }
@@ -79,6 +85,13 @@ export default async function MeetingDetailPage({ params }: { params: Promise<{ 
                     userId={user.id}
                     initialArtifacts={artifacts}
                 />
+
+                <div className="p-4 bg-gray-900 rounded text-xs font-mono text-gray-500 mt-8">
+                    <p>Debug Info:</p>
+                    <p>Meeting ID: {meeting.id}</p>
+                    <p>Artifacts found: {artifacts.length}</p>
+                    <pre>{JSON.stringify(artifacts, null, 2)}</pre>
+                </div>
             </div>
         </div>
     )

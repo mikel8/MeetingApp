@@ -36,7 +36,7 @@ export default async function MeetingsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {meetings.map((meeting: any) => (
+                            {meetings.map((meeting) => (
                                 <tr key={meeting.id}>
                                     <td>
                                         <Link href={`/meetings/${meeting.id}`} className="font-medium hover:underline">
