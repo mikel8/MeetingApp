@@ -1,0 +1,27 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Audio to Text Transcription",
+  "version": "1.0",
+ "description": "Convert audio (WAV, MP3, FLAC) to text. Copy or download the transcribed text.",
+
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup5.html",
+    "default_icon": {
+     
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+   
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Screen Recorder</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    input {
+      padding: 8px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    #pairingUI {
+      display: none;
+      border-color: #ffcc00;
+      background: #fffbef;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .error {
+      color: #d93025;
+    }
+
+    .success {
+      color: #188038;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Screen Recorder</h1>
+
+  <div class="section">
+    <button id="startCapture">Start Capture</button>
+    <button id="stopCapture" disabled>Stop Capture</button>
+    <button id="download" disabled>Download</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <div id="pairingUI" class="section">
+    <h3>Connect to Web App</h3>
+    <p>To upload recordings, please pair this extension with your account.</p>
+    <p>
+      1. Go to <a href="http://localhost:3000/connect-extension" target="_blank">Connect Extension</a><br>
+      2. Enter the 6-digit code below:
+    </p>
+    <div style="display: flex; gap: 10px;">
+      <input type="text" id="pairingCodeInput" placeholder="123456" maxlength="6"
+        style="font-size: 1.2em; width: 100px; text-align: center;">
+      <button id="submitCodeBtn">Connect</button>
+    </div>
+    <div id="pairingStatus" class="status"></div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+
+</html>

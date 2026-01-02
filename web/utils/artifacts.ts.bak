@@ -1,0 +1,33 @@
+
+export function generateArtifactId(): string {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID()
+    }
+    // Fallback for environments without crypto.randomUUID
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+export function inferExtension(fileName: string, mimeType: string): string {
+    if (fileName.includes('.')) {
+        return fileName.split('.').pop() || 'dat'
+    }
+    // Basic mime inference if extension missing
+    if (mimeType.includes('video')) return 'webm'
+    if (mimeType.includes('audio')) return 'mp3'
+    if (mimeType.includes('image')) return 'png'
+    return 'dat'
+}
+
+export function buildStoragePath(userId: string, meetingId: string, artifactId: string, extension: string): string {
+    return `${userId}/${meetingId}/${artifactId}.${extension}`
+}
+
+export function deriveKind(mimeType: string): 'video' | 'audio' | 'image' | 'file' {
+    if (mimeType.startsWith('video/')) return 'video'
+    if (mimeType.startsWith('audio/')) return 'audio'
+    if (mimeType.startsWith('image/')) return 'image'
+    return 'file'
+}

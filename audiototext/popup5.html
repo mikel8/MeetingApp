@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Transcription</title>
+    <link rel="stylesheet" href="popup.css">
+    <script src="popup5.js" defer></script> <!-- Link to your JavaScript file -->
+</head>
+<body>
+
+  <label for="languageSelect">Select Language:</label>
+<select id="languageSelect">
+    <option value="en-US">English (US)</option>
+    <option value="es-MX">Spanish (Mexico)</option>
+    <option value="fr-FR">French (France)</option>
+    <option value="de-DE">German</option>
+    <option value="zh-CN">Chinese (Simplified)</option>
+    <!-- Add other languages as needed -->
+</select>
+
+    <h1>Audio Transcription</h1>
+    <input type="file" id="audioFileInput" accept="audio/*">
+    <button id="transcribeBtn">Transcribe</button>
+    <h2>Transcription Result:</h2>
+    <textarea id="transcriptionOutput" rows="10" cols="50" readonly></textarea>
+
+    <div id="loadingMessage" style="display: none;">Transcription in progress, please wait...</div>
+    <button id="copyBtn">Copy to Clipboard</button>
+    <button id="downloadBtn">Download Output</button>
+</body>
+</html>

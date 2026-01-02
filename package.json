@@ -1,0 +1,14 @@
+{
+    "name": "meeting-app-infrastructure",
+    "private": true,
+    "scripts": {
+        "dev": "npm run dev --prefix web",
+        "build": "npm run build --prefix web",
+        "start": "npm run start --prefix web",
+        "lint": "npm run lint --prefix web",
+        "supabase:help": "echo 'This project uses Supabase Cloud. Docker is not required.'",
+        "supabase:start": "echo 'Docker is optional. Use Supabase Cloud for this project.'",
+        "supabase:stop": "echo 'No local Docker instance to stop.'",
+        "supabase:reset": "echo 'Please use the SQL Editor in Supabase Cloud to run migrations.'"
+    }
+}
