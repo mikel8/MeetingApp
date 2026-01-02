@@ -1,12 +1,39 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
+const rateLimit = new Map<string, { count: number, resetAt: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const MAX_ATTEMPTS = 5;
+
 export async function POST(request: Request) {
     try {
+        // 1. Rate Limiting
+        const forwardedFor = request.headers.get('x-forwarded-for');
+        const ip = forwardedFor ? forwardedFor.split(',')[0] : 'unknown';
+
+        const now = Date.now();
+        const userLimit = rateLimit.get(ip) || { count: 0, resetAt: now + RATE_LIMIT_WINDOW };
+
+        if (now > userLimit.resetAt) {
+            userLimit.count = 0;
+            userLimit.resetAt = now + RATE_LIMIT_WINDOW;
+        }
+
+        if (userLimit.count >= MAX_ATTEMPTS) {
+            console.warn(`Rate limit exceeded for IP: ${ip}`);
+            return NextResponse.json({ error: 'Too many attempts. Please try again later.' }, { status: 429 });
+        }
+
+        userLimit.count++;
+        rateLimit.set(ip, userLimit);
+
+        // 2. Format Validation
         const { code } = await request.json();
 
-        if (!code) {
-            return NextResponse.json({ error: 'Code is required' }, { status: 400 });
+        if (!code || typeof code !== 'string' || !/^\d{6}$/.test(code)) {
+            console.warn(`Invalid code format received from IP: ${ip}`);
+            // Return generic error to avoid probing
+            return NextResponse.json({ error: 'Invalid code format' }, { status: 400 });
         }
 
         const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -20,40 +47,26 @@ export async function POST(request: Request) {
             serviceRoleKey
         );
 
-        // Fetch the code record
+        // 3. Atomic Consume & Check
+        // We attempt to update the row ONLY if it is valid, unconsumed, and not expired.
+        // If no row is returned, it means the code was invalid, consumed, or expired.
         const { data, error } = await supabaseAdmin
             .from('extension_pair_codes')
-            .select('*')
+            .update({ consumed: true })
             .eq('code', code)
+            .eq('consumed', false)
+            .gt('expires_at', new Date().toISOString())
+            .select('refresh_token, user_id')
             .single();
 
         if (error || !data) {
-            // Return 404 to avoid leaking valid codes if possible, or just generic error
+            // 4. Log failed attempts
+            console.warn(`Failed exchange attempt for code (redacted) from IP: ${ip}. Error: ${error?.message || 'No matching valid code found'}`);
             return NextResponse.json({ error: 'Invalid or expired code' }, { status: 404 });
         }
 
-        // Check expiration
-        if (new Date(data.expires_at) < new Date()) {
-            return NextResponse.json({ error: 'Code expired' }, { status: 400 });
-        }
-
-        // Check consumed
-        if (data.consumed) {
-            return NextResponse.json({ error: 'Code already used' }, { status: 400 });
-        }
-
-        // Consume the code
-        const { error: updateError } = await supabaseAdmin
-            .from('extension_pair_codes')
-            .update({ consumed: true })
-            .eq('id', data.id);
-
-        if (updateError) {
-            console.error('Error marking code as consumed:', updateError);
-            return NextResponse.json({ error: 'Failed to consume code' }, { status: 500 });
-        }
-
-        // Return the refresh token
+        // Success
+        console.info(`Successfully exchanged code for user ${data.user_id}`);
         return NextResponse.json({
             refresh_token: data.refresh_token,
             user_id: data.user_id
