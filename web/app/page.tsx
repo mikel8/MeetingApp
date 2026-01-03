@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './landing.module.css'
 
 export default function Home() {
@@ -6,11 +7,27 @@ export default function Home() {
     <div className={styles.page}>
       <header className="container">
         <div className={styles.header}>
-          <div className={styles.brand}>Briefly AI</div>
+          <div className={styles.brand}>
+            <Image
+              src="/logo.png"
+              alt="Briefly AI Logo"
+              width={32}
+              height={32}
+              className={styles.logo}
+            />
+            Briefly AI
+          </div>
         </div>
       </header>
 
       <main className={`container ${styles.hero}`}>
+        <Image
+          src="/logo.png"
+          alt="Briefly AI Logo"
+          width={80}
+          height={80}
+          className={styles.heroLogo}
+        />
         <h1 className={styles.title}>Briefly AI</h1>
         <p className={styles.subtitle}>
           Smart Meeting Notes. Record meetings with our Chrome extension and review them later in your private dashboard.
