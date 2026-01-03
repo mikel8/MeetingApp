@@ -17,9 +17,14 @@ export default function Home() {
         </p>
 
         <div className={styles.actions}>
-          <Link href="#" className={`btn btn-primary ${styles.ctaBtn}`}>
+          <a
+            href="https://chromewebstore.google.com/detail/briefly-ai-%E2%80%93-smart-meetin/ocialdcjgkdkebggglngkpeiideimdoo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`btn btn-primary ${styles.ctaBtn}`}
+          >
             Install Chrome Extension
-          </Link>
+          </a>
           <Link href="/login" className={`btn glass ${styles.ctaBtn}`}>
             Sign in
           </Link>
